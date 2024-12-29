@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .dice {
+            font-size: 5rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dice Game</h1>
+        <p>Click "Roll Dice" to play!</p>
+        <div>
+            <span class="dice" id="player1Dice">🎲</span>
+            <span class="dice" id="player2Dice">🎲</span>
+        </div>
+        <button onclick="rollDice()">Roll Dice</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function rollDice() {
+            fetch('/roll_dice')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('player1Dice').textContent = `🎲 ${data.player1}`;
+                    document.getElementById('player2Dice').textContent = `🎲 ${data.player2}`;
+                    document.getElementById('result').textContent = data.result;
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                });
+        }
+    </script>
+</body>
+
+</html>
